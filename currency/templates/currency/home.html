@@ -71,9 +71,14 @@
                     <label class="block text-gray-700 font-semibold mb-2">
                         Value
                     </label>
-                    <input type="number" name="amount" step="0.01"
-                        class="w-full px-4 py-3  border border-gray-400 rounded-xl focus:ring-2 focus:ring-gray-400"
-                        placeholder="Enter value">
+                    <input 
+                        type="text"
+                        name="amount"
+                        id="amount"
+                        inputmode="decimal"
+                        class="w-full px-4 py-3 border border-gray-400 rounded-xl focus:ring-2 focus:ring-gray-400"
+                        placeholder="Enter value"
+                        required>
                 </div>
 
             </div>
@@ -189,6 +194,30 @@
         });
 
         updateUnits();
+
+        // const amountInput = document.getElementById("amount");
+
+        amountInput.addEventListener("input", function () {
+            let value = this.value;
+
+            // Remove invalid characters (anything except digits, dot, minus)
+            value = value.replace(/[^0-9.-]/g, '');
+
+            // Allow only one minus sign at the beginning
+            if (value.includes('-')) {
+                value = value.replace(/-/g, '');
+                value = '-' + value;
+            }
+
+            // Allow only one decimal point
+            const parts = value.split('.');
+            if (parts.length > 2) {
+                value = parts[0] + '.' + parts.slice(1).join('');
+            }
+
+            this.value = value;
+        });
+
     </script>
 
 </body>

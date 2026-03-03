@@ -26,7 +26,10 @@ def home(request):
 
 def convert(request):
     try:
-        amount = float(request.GET.get("amount"))
+        try:
+            amount = float(request.GET.get("amount"))
+        except (TypeError, ValueError):
+            return JsonResponse({"error": "Invalid amount"})
         convert_type = request.GET.get("type")
         from_unit = request.GET.get("from_unit")
         to_unit = request.GET.get("to_unit")
@@ -40,7 +43,7 @@ def convert(request):
 
         elif convert_type == "length":
             if from_unit == "meter" and to_unit == "km":
-                result = amount / 1000
+                result = round(amount / 1000, 3)
             elif from_unit == "km" and to_unit == "meter":
                 result = amount * 1000
             else:
@@ -48,9 +51,9 @@ def convert(request):
 
         elif convert_type == "temperature":
             if from_unit == "celsius" and to_unit == "fahrenheit":
-                result = (amount * 9/5) + 32
+                result = round((amount * 9/5) + 32, 3)
             elif from_unit == "fahrenheit" and to_unit == "celsius":
-                result = (amount - 32) * 5/9
+                result = round((amount - 32) * 5/9, 3)
             else:
                 result = amount
 
