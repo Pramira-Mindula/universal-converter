@@ -7,10 +7,10 @@
 </head>
 <body class="bg-gradient-to-br from-gray-100 to-gray-300 min-h-screen flex items-center justify-center">
 
-    <div class="bg-white shadow-xl rounded-2xl p-8 w-96">
+    <div class="bg-white shadow-xl rounded-2xl p-8 w-100">
         
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">
-            🔄 Universal Converter
+        <h1 class="text-4xl font-bold text-center text-gray-800 mb-6">
+            Universal Converter
         </h1>
 
         <form method="post" class="space-y-4">
@@ -18,7 +18,7 @@
 
             <!-- Conversion Type -->
             <div>
-                <label class="block text-gray-600 text-sm mb-1">Conversion Type</label>
+                <label class="block text-gray-600 text-m mb-1">Conversion Type</label>
                 <select name="type"
                         class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-400">
                     <option value="currency">Currency</option>
@@ -26,26 +26,21 @@
                     <option value="temperature">Temperature</option>
                 </select>
             </div>
-
-            <!-- Amount -->
-            <div>
-                <label class="block text-gray-600 text-sm mb-1">Value</label>
-                <input type="number" name="amount" step="0.01"
-                       class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-400"
-                       placeholder="Enter value">
-            </div>
-
+ 
             <!-- From -->
             <div>
-                <label class="block text-gray-600 text-sm mb-1">From</label>
-                <select id="from_unit" name="from_unit"
+                <label class="block text-gray-600 text-m mb-1">From</label>
+                <select name="from_unit" id="from_unit"
                         class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-400">
+                            {% for currency in currencies %}
+                                <option value="{{ currency }}">{{ currency }}</option>
+                            {% endfor %}
                 </select>
             </div>
 
             <div class="flex justify-center">
                 <button type="button" id="swapBtn"
-                        class="bg-gray-200 px-3 py-1 rounded-full hover:bg-gray-300 transition">
+                        class="bg-gray-200  mt-6 px-3 py-1 rounded-full hover:bg-gray-300 transition">
                     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
                         <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
                         <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
@@ -55,10 +50,21 @@
 
             <!-- To -->
             <div>
-                <label class="block text-gray-600 text-sm mb-1">To</label>
-                <select id="to_unit" name="to_unit"
+                <label class="block text-gray-600 text-m mb-1">To</label>
+                <select name="to_unit" id="to_unit"
                         class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-400">
+                            {% for currency in currencies %}
+                                <option value="{{ currency }}">{{ currency }}</option>
+                            {% endfor %}
                 </select>
+            </div>
+
+            <!-- Amount -->
+            <div>
+                <label class="block text-gray-600 text-m mb-1">Value</label>
+                <input type="number" name="amount" step="0.01"
+                       class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-400"
+                       placeholder="Enter value">
             </div>
 
             <button type="submit"
@@ -87,19 +93,31 @@
         const toSelect = document.getElementById("to_unit");
         const swapBtn = document.getElementById("swapBtn");
 
-        const units = {
-            currency: ["USD", "LKR", "EUR"],
-            length: ["Meter", "KM"],
-            temperature: ["Celsius", "Fahrenheit"]
-        };
+        const lengthUnits = ["Meter", "KM"];
+        const tempUnits = ["Celsius", "Fahrenheit"];
 
         function updateUnits() {
             const selectedType = typeSelect.value;
 
+            if (selectedType === "currency") {
+                //API fetch the currencies
+                return;
+            }
+
+            let units = [];
+
+            if (selectedType === "length") {
+                units = lengthUnits;
+            }
+
+            if (selectedType === "temperature") {
+                units = tempUnits;
+            }
+
             fromSelect.innerHTML = "";
             toSelect.innerHTML = "";
 
-            units[selectedType].forEach(unit => {
+            units.forEach(unit => {
                 const option1 = document.createElement("option");
                 option1.value = unit;
                 option1.textContent = unit;
@@ -122,13 +140,9 @@
             }
         }
 
-        // When user changes FROM
         fromSelect.addEventListener("change", preventSameSelection);
-
-        // When user changes TO
         toSelect.addEventListener("change", preventSameSelection);
 
-        // Swap button logic
         swapBtn.addEventListener("click", function () {
             const temp = fromSelect.value;
             fromSelect.value = toSelect.value;
@@ -136,9 +150,6 @@
         });
 
         typeSelect.addEventListener("change", updateUnits);
-
-        // Initialize
-        updateUnits();
     </script>
 
 </body>
