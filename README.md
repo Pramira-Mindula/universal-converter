@@ -62,16 +62,19 @@
 ## 📂 Project Structure
 ```
 mysite/
-│
-├── converter/
-│ ├── views.py
-│ ├── urls.py
-│ ├── templates/
-│ │ └── currency/
-│ │ └── home.html
-│
-├── manage.py
-└── db.sqlite3
+    ├── manage.py
+    ├── db.sqlite3
+    ├── currency/
+    │   ├── views.py
+    │   ├── models.py
+    │   ├── urls.py
+    │   └── ...
+    └── mysite/
+        ├── settings.py
+        ├── urls.py
+        ├── asgi.py
+        └── wsgi.py
+
 ```
 
 
@@ -135,6 +138,7 @@ https://open.er-api.com/v6/latest/USD
 
 Pramira Mindula
 GitHub: https://github.com/Pramira-Mindula
+---
 
 ### ⭐ If you like this project
 - Give it a star on GitHub!
