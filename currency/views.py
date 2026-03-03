@@ -12,10 +12,21 @@ def home(request):
         #Currency
         if convert_type == "currency":
             usd = 310
+            eur = 362
+            aud = 291
             if from_unit == "USD" and to_unit == "LKR":
                 result = amount * usd
+            elif from_unit == "EUR" and to_unit == "LKR":
+                result = amount * eur
+            elif from_unit == "AUD" and to_unit == "LKR":
+                result = amount * aud
             elif from_unit == "LKR" and to_unit == "USD":
                 result = amount / usd
+            elif from_unit == "LKR" and to_unit == "EUR":
+                result = amount / eur
+            elif from_unit == "LKR" and to_unit == "AUD":
+                result = amount / aud
+
 
         #Length
         elif convert_type == "length":
