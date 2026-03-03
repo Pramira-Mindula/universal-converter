@@ -65,6 +65,9 @@ mysite/
     ├── manage.py
     ├── db.sqlite3
     ├── currency/
+    |   ├── templates/
+    |   |     ├── currency/
+    |   |     |     ├── home.html
     │   ├── views.py
     │   ├── models.py
     │   ├── urls.py
@@ -74,6 +77,7 @@ mysite/
         ├── urls.py
         ├── asgi.py
         └── wsgi.py
+        └── ...
 
 ```
 
@@ -138,7 +142,6 @@ https://open.er-api.com/v6/latest/USD
 
 Pramira Mindula
 GitHub: https://github.com/Pramira-Mindula
----
 
 ### ⭐ If you like this project
 - Give it a star on GitHub!
