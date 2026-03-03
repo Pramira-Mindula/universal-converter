@@ -24,7 +24,7 @@ def home(request):
             elif from_unit == "km" and to_unit == "meter":
                 result = amount * 1000
 
-        #Temp
+        #Tempe
         elif convert_type == "temperature":
             if from_unit == "celsius" and to_unit == "fahrenheit":
                 result = (amount * 9/5) + 32
