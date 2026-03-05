@@ -156,19 +156,31 @@
             const from = fromSelect.value;
             const to = toSelect.value;
 
-            const response = await fetch(`/convert/?amount=${amount}&type=${type}&from_unit=${from}&to_unit=${to}`);
-            const data = await response.json();
+            const response = await fetch(
+                `/convert/?amount=${amount}&type=${type}&from_unit=${from}&to_unit=${to}`
+            );
 
+            const data = await response.json();
             const resultDisplay = document.getElementById("resultDisplay");
 
             if (data.result !== undefined) {
+
+                // 🔹 Calculate rate (1 unit conversion)
+                let rate = (parseFloat(data.result) / parseFloat(amount)).toFixed(4);
+
                 resultDisplay.innerHTML = `
-                    <div class="text-gray-500 text-lg">
+                    <div class="text-gray-600 text-lg font-medium">
+                        1 ${from} = ${rate} ${to}
+                    </div>
+
+                    <div class="mt-6 text-gray-500 text-lg">
                         ${amount} ${from}
                     </div>
+
                     <div class="text-5xl font-bold text-gray-800">
                         ${data.result}
                     </div>
+
                     <div class="text-gray-500 text-lg">
                         ${to}
                     </div>
@@ -195,21 +207,21 @@
 
         updateUnits();
 
-        // const amountInput = document.getElementById("amount");
+        //const amountInput = document.getElementById("amount");
 
         amountInput.addEventListener("input", function () {
             let value = this.value;
 
-            // Remove invalid characters (anything except digits, dot, minus)
+            //Remove invalid characters (anything except digits, dot, minus)
             value = value.replace(/[^0-9.-]/g, '');
 
-            // Allow only one minus sign at the beginning
+            //Allow only one minus sign at the beginning
             if (value.includes('-')) {
                 value = value.replace(/-/g, '');
                 value = '-' + value;
             }
 
-            // Allow only one decimal point
+            //Allow only one decimal point
             const parts = value.split('.');
             if (parts.length > 2) {
                 value = parts[0] + '.' + parts.slice(1).join('');
