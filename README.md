@@ -89,8 +89,8 @@ mysite/
 ### 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/your-username/universal-converter.git
-cd universal-converter
+git clone https://github.com/Pramira-Mindula/universal-converter.git
+cd mysite
 ```
 
 ### 2️⃣ Create Virtual Environment
